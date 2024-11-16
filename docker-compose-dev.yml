@@ -1,0 +1,71 @@
+version: '3.4'
+
+services:
+  app:
+    build:
+      args:
+        user: system_cleverweb
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    image: system_cleverweb
+    container_name: system_cleverweb-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    ports:
+      - "6001:6001"
+    volumes:
+      - ./:/var/www
+    networks:
+      - system_cleverweb_network
+
+  nginx:
+    image: nginx:alpine
+    container_name: system_cleverweb-nginx
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      - NGINX_port=80
+    volumes:
+      - ./:/var/www/
+      - ./docker-compose/nginx:/etc/nginx/conf.d
+    links:
+      - postgres
+      - app
+    networks:
+      - system_cleverweb_network
+    labels:
+      - "traefik.http.routers.nginx.rule=Host(`system_cleverweb.localhost`)"
+    depends_on:
+      - traefik
+
+  postgres:
+    image: postgres:16.4
+    container_name: system_cleverweb-postgres
+    restart: unless-stopped
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    volumes:
+      - ./docker-compose/postgres:/var/lib/postgresql/data
+    networks:
+      - system_cleverweb_network
+
+  traefik:
+    container_name: system_cleverweb-traefik
+    image: traefik:v2.9
+    command: --api.insecure=true --providers.docker
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - system_cleverweb_network
+networks:
+  system_cleverweb_network:
+    driver: bridge

@@ -1,10 +1,10 @@
-@import "../plugins/custom/datatables/datatables.bundle.css";
-@import "../plugins/global/plugins.bundle.css";
-@import "../css/style.bundle.css";
-@import '../plugins/custom/jquery-bar-rating/dist/themes/css-stars.css';
-@import '../plugins/custom/fullcalendar/fullcalendar.bundle.css';
-@import '../../../node_modules/select2/dist/css/select2.css';
-@import '../../../node_modules/select2/src/scss/core';
+@use "../plugins/custom/datatables/datatables.bundle.css";
+@use "../plugins/global/plugins.bundle.css";
+@use "../css/style.bundle.css";
+@use '../plugins/custom/jquery-bar-rating/dist/themes/css-stars.css';
+@use '../plugins/custom/fullcalendar/fullcalendar.bundle.css';
+@use '../../../node_modules/select2/dist/css/select2.css';
+@use '../../../node_modules/select2/src/scss/core';
 
 
 // Bootstrap base colors

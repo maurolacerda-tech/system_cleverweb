@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Mail\SendMailSuporte;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
@@ -21,8 +23,18 @@ class UserService extends Service
             $search_name = $search_array['search_name'] ?? null;
             $search_role = $search_array['search_role'] ?? null;
 
-            $users = User::where(function($query) use($search_name, $search_role){
+            $user_auth = Auth::user();
+            /** @disregard [hasAnyRoles] [method in User Model] */
+            $user_is_developer = $user_auth->hasAnyRoles('developer');
+
+            $users = User::where(function($query) use($search_name, $search_role, $user_is_developer){
                 $query->where('id','>',0);
+
+                if(!$user_is_developer){
+                    $query->whereHas('roles', function($q){
+                        $q->where('roles.id','<>',1);
+                    });
+                }
 
                 if(!is_null($search_role) && !empty($search_role)){
                     $query->whereHas('roles', function($q) use($search_role){
@@ -188,9 +200,12 @@ class UserService extends Service
             $user->fill($data_store);
             $user->save();
 
-            $role_id = $data['role_id'] ?? [];
-            if(is_array($role_id)){
-                $user->roles()->sync($role_id);
+
+            if( Gate::allows("manager_system_edit_users") ){
+                $role_id = $data['role_id'] ?? [];
+                if(is_array($role_id)){
+                    $user->roles()->sync($role_id);
+                }
             }
 
             return response()->json([

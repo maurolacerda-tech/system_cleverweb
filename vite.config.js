@@ -19,5 +19,12 @@ export default defineConfig({
             '~select2': path.resolve(__dirname, 'node_modules/select2'),
             '~shadowbox': path.resolve(__dirname, 'node_modules/shadowbox-js')
         }
-    }
+    },
+    css: {
+        preprocessorOptions: {
+          scss: {
+            api: 'modern-compiler',
+          },
+        },
+    },
 });

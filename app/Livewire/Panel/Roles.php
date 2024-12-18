@@ -89,4 +89,15 @@ class Roles extends Component
             $this->last_id_update = $response->original['data']->id;
         }
     }
+
+    public function delete_item($role_id)
+    {
+        $role_service = new RoleService;
+        $response = $role_service->delete_item($role_id);
+        if (isset($response->original['error']) && $response->original['error']) {
+            $this->alert('error', $response->original['message'],['timer' => '6000']);
+        }else{
+            $this->alert('success', 'Excluído com sucesso!',['timer' => '6000']);
+        }
+    }
 }

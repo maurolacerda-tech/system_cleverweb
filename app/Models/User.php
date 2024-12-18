@@ -67,7 +67,6 @@ class User extends Authenticatable
         if(is_array($roles) || is_object($roles) ) {
             return !! $roles->intersect($this->roles)->count();
         }
-        
         return $this->roles->contains('name', $roles);
     }
 }

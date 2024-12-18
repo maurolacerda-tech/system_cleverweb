@@ -85,7 +85,9 @@
                                                 @include('livewire.panel.includes.user-form')
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" @click="openCreateRegister = ! openCreateRegister">Fechar</button>
+                                                <button type="button" class="btn btn-secondary" id="btn_close_modal_add" @click="openCreateRegister = ! openCreateRegister">
+                                                    Fechar
+                                                </button>
                                                 <button type="submit" id="kt_sign_in_submit" class="btn btn-lg btn-warning" wire:loading.attr="disabled">
                                                     <span class="indicator-label" wire:loading.remove>Salvar</span>
                                                     <span wire:loading>Por favor aguarde...

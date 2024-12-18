@@ -94,30 +94,35 @@
     </div>
 </div>
 
-<label class="fw-bold fs-6 mb-5 d-block">
-    Equipes
-    <a href="javascript:void(0);" class="float-end small" id="mark_all" wire:click="select_all"> marcar todos</a>
-</label>
+@if(
+    (auth()->user()->can('manager_system_edit_users') && isset($user)) ||
+    (auth()->user()->can('manager_system_add_users') && !isset($user))
+)
+    <label class="fw-bold fs-6 mb-5 d-block">
+        Equipes
+        <a href="javascript:void(0);" class="float-end small" id="mark_all" wire:click="select_all"> marcar todos</a>
+    </label>
 
-<div class="mb-7 fv-row row">
+    <div class="mb-7 fv-row row">
+        
+        @foreach ($roles as $role)
     
-    @foreach ($roles as $role)
- 
-    <div class="col-lg-6 col-md-6">
-        <div class="form-check form-check-custom form-check-solid">
-            <input type="checkbox" name="role_id[]" id="kt_modal_update_role_option_{{$role->id}}" value="{{$role->id}}" class="form-check-input me-3 check_select_item_class" wire:model="role_id">
-            <label class="form-check-label" for="kt_modal_update_role_option_{{$role->id}}">
-                <div class="fw-bolder text-gray-800">{{$role->label}}</div>
-            </label>
+        <div class="col-lg-6 col-md-6">
+            <div class="form-check form-check-custom form-check-solid">
+                <input type="checkbox" name="role_id[]" id="kt_modal_update_role_option_{{$role->id}}" value="{{$role->id}}" class="form-check-input me-3 check_select_item_class" wire:model="role_id">
+                <label class="form-check-label" for="kt_modal_update_role_option_{{$role->id}}">
+                    <div class="fw-bolder text-gray-800">{{$role->label}}</div>
+                </label>
+            </div>
+            <div class='separator separator-dashed my-5'></div>
         </div>
-        <div class='separator separator-dashed my-5'></div>
+        @endforeach
+        @error('role_id')
+            <div class="text-danger pt-1 small">
+                <i class="fa fa fa-times-circle text-danger"></i>
+                {{ $message }} 
+            </div>
+        @enderror
     </div>
-    @endforeach
-    @error('role_id')
-        <div class="text-danger pt-1 small">
-            <i class="fa fa fa-times-circle text-danger"></i>
-            {{ $message }} 
-        </div>
-    @enderror
-</div>
+@endif
 

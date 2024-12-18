@@ -34,16 +34,18 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Paginator::useBootstrap();
 
-        if(env('APP_ENV') == 'production')
-            URL::forceScheme('https');
+        
 
         $atual_h = app('request')->getHost();
         $dev_h = 'c3lzdGVtX2NsZXZlcndlYi5sb2NhbGhvc3Q=';
         $prod_h = 'c2lzdGVtYXMuY2xldmVyd2ViLmNvbS5icg==';
 
-        if($atual_h!=base64_decode($dev_h) && $atual_h!=base64_decode($prod_h)){
-            header('Location: '.base64_decode('aHR0cHM6Ly9jbGV2ZXJ3ZWIuY29tLmJyL3NlcnZpY29zL3Npc3RlbWFzLXdlYg=='));
-            exit();
+        if(env('APP_ENV') == 'production'){
+            URL::forceScheme('https');
+            if($atual_h!=base64_decode($dev_h) && $atual_h!=base64_decode($prod_h)){
+                header('Location: '.base64_decode('aHR0cHM6Ly9jbGV2ZXJ3ZWIuY29tLmJyL3NlcnZpY29zL3Npc3RlbWFzLXdlYg=='));
+                exit();
+            }
         }
 
         if(Schema::hasTable('permissions')){

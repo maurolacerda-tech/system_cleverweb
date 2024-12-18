@@ -71,7 +71,8 @@ class UsersEdit extends Component
 
     public function store()
     {
-        if( Gate::denies("manager_system_edit_users") ) 
+        $this_user_id = Auth::user()->id;
+        if( Gate::denies("manager_system_edit_users") && $this_user_id != $this->user->id ) 
             abort(403, 'Você não tem permissão para gerenciar esta página');
         
         $validated = $this->validate();

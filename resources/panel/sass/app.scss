@@ -3,8 +3,6 @@
 @use "../css/style.bundle.css";
 @use '../plugins/custom/jquery-bar-rating/dist/themes/css-stars.css';
 @use '../plugins/custom/fullcalendar/fullcalendar.bundle.css';
-@use '../../../node_modules/select2/dist/css/select2.css';
-@use '../../../node_modules/select2/src/scss/core';
 
 
 // Bootstrap base colors
@@ -121,7 +119,7 @@ $item-rotation: 0deg;
         .center{
             width: $loader-size;
             height: $loader-size;
-            background: url(/assets-manager/media/logos/load.png);
+            background: url(/resources/panel/images/loading.gif);
             background-repeat: no-repeat;
             background-size: cover;
             animation: center $loader-time ease-in-out infinite;

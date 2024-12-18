@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Mail\SendMailSuporte;
 use App\Models\Role;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -14,8 +15,15 @@ class RoleService extends Service
     {
         try {
             $search_label = $search_array['search_label'] ?? null;
-            $roles = Role::where(function($query) use($search_label){
-                $query->where('id','>',0);
+            $user_auth = Auth::user();
+            /** @disregard [hasAnyRoles] [method in User Model] */
+            $user_is_developer = $user_auth->hasAnyRoles('developer');
+            $roles = Role::where(function($query) use($search_label, $user_is_developer){
+                if($user_is_developer)
+                    $query->where('id','>',0);
+                else
+                    $query->where('id','<>',1);
+
                 if(!is_null($search_label) && !empty($search_label)){
                     $name_searchArray = explode(' ',$search_label);
                     foreach($name_searchArray as $name_search){
@@ -49,11 +57,15 @@ class RoleService extends Service
             $validator = Validator::make(
                 $data, 
                 [
-                    'name' => 'required',
+                    'name' => [
+                        'required',
+                        Rule::unique('roles'), 
+                    ],
                     'label' => 'required'
                 ],
                 [
                     'name.required' => 'O Código do Grupo de Trabalho é obrigatório',
+                    'name.unique' => 'Já existe um Grupo de Trabalho com esta tag',
                     'label.required' => 'Título de Identificação é obrigatório'
                 ]
             );
@@ -141,6 +153,33 @@ class RoleService extends Service
             return response()->json([
                 'error' => true,
                 'message' => 'Houve um problema ao atualizar a permissão, nosso suporte foi notificado, tente novamente em alguns minutos.'
+            ], 200);
+        }
+    }
+
+    public function delete_item($role_id)
+    {
+        try {
+            if(!is_numeric($role_id)){
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Registro não encontrado!'
+                ], 200);
+            }
+            Role::where('id',$role_id)->delete();
+            return response()->json([
+                'error' => false,
+                'message' => 'Excluído com sucesso!'
+            ], 200);
+        } catch (\Throwable $th) {
+            $error_page = $th->getMessage().' linha:'.$th->getLine().' do arquivo:'.$th->getFile().' | Services->RoleService->delete_item';
+            $error_title = 'Error Suporte - '.config('app.name');
+            $mail_support = config('app.mail_support');
+            Mail::to($mail_support)->send(new SendMailSuporte($error_page, $error_title));
+
+            return response()->json([
+                'error' => true,
+                'message' => 'Houve um problema ao excluir, nosso suporte foi notificado, tente novamente em alguns minutos.'
             ], 200);
         }
     }

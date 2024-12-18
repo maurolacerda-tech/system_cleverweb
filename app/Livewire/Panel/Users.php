@@ -88,19 +88,14 @@ class Users extends Component
             abort(403, 'Você não tem permissão para gerenciar esta página');
 
         $validated = $this->validate();
-        $data = [
-            'name' => $this->name,
-            'label' => $this->label,
-            'permission_id' => $this->permission_id
-        ];
         $user_service = new UserService;
-        $response = $user_service->store($data);
+        $response = $user_service->store($validated);
         if(isset($response->original['error']) && $response->original['error']){
             $this->alert('error', $response->original['message'],['timer' => '6000']);
         }else{
-            $this->reset(['permission_id', 'name', 'label']);
+            $this->reset(['image', 'name', 'email', 'password', 'status','role_id']);
             $this->js("document.getElementById('btn_close_modal_add').click();");
-            $this->alert('success', 'Grupo de Trabalho adicionada com sucesso!',['timer' => '6000']);
+            $this->alert('success', 'Adicionado com sucesso!',['timer' => '6000']);
             $this->last_id_update = $response->original['data']->id;
         }
     }

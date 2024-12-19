@@ -26,7 +26,8 @@ class PermissionTableSeeder extends Seeder
             ['name' => 'manager_system_edit_roles', 'label' => 'Permissão para Editar Grupos de Trabalho', 'group_name' => 'system'],
 
             ['name' => 'manager_system_settings', 'label' => 'Gerenciar Configurações', 'group_name' => 'system'],
-            ['name' => 'manager_system_integrations', 'label' => 'Gerenciar Integrações', 'group_name' => 'system']
+            ['name' => 'manager_system_integrations', 'label' => 'Gerenciar Integrações', 'group_name' => 'system'],
+            ['name' => 'view_system_logs', 'label' => 'Visualizar Logs', 'group_name' => 'system']
         ];
 
         Permission::insert($listArray);

@@ -186,6 +186,17 @@
                         </div>
                         @endcan
 
+                        @can('view_system_logs')
+                        <div class="menu-item">
+                            <a href="{{route('panel.logs')}}" class="menu-link @if('panel.logs' == $route_base || 'panel.logs' == $route_name) active @endif" wire:navigate>
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Logs</span>
+                            </a>
+                        </div>
+                        @endcan
+
                     </div>
                 </div>
 

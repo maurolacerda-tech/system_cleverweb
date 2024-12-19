@@ -14,7 +14,7 @@
         "maatwebsite/excel": "^3.1",
         "mostafaznv/php-x-sendfile": "^1.1",
         "rap2hpoutre/fast-excel": "^5.5",
-        "spatie/laravel-activitylog": "*",
+        "spatie/laravel-activitylog": "^4.9",
         "spatie/laravel-html": "^3.10"
     },
     "require-dev": {

@@ -4,6 +4,7 @@ use App\Livewire\Panel\{
     Auth,
     Dashboard,
     Integrations,
+    Logs,
     Permissions,
     PermissionsEdit,
     Roles,
@@ -30,4 +31,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/panel/settings', Settings::class)->name('panel.settings');
     Route::get('/panel/integrations', Integrations::class)->name('panel.integrations');
+
+    Route::get('/panel/logs', Logs::class)->name('panel.logs');
 });

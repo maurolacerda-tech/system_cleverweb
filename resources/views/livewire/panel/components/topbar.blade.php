@@ -123,7 +123,7 @@
         <!--end::User -->
         <!--begin::Heaeder menu toggle-->
         <div class="d-flex align-items-center d-lg-none ms-2 me-n3" title="Show header menu">
-            <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_header_menu_mobile_toggle">
+            <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px" id="kt_header_menu_mobile_toggle" onclick="open_close_menutop();">
                 <span class="svg-icon svg-icon-1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                         <path d="M13 11H3C2.4 11 2 10.6 2 10V9C2 8.4 2.4 8 3 8H13C13.6 8 14 8.4 14 9V10C14 10.6 13.6 11 13 11ZM22 5V4C22 3.4 21.6 3 21 3H3C2.4 3 2 3.4 2 4V5C2 5.6 2.4 6 3 6H21C21.6 6 22 5.6 22 5Z" fill="black" />
@@ -137,3 +137,11 @@
     </div>
     <!--end::Toolbar wrapper-->
 </div>
+
+@script
+<script>
+    window.open_close_menutop = function (){
+        $wire.dispatch('openmenutop');
+    }
+</script>
+@endscript

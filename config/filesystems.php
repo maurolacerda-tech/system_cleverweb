@@ -54,7 +54,30 @@ return [
             'url' => env('AWS_URL'),
             'endpoint' => env('AWS_ENDPOINT'),
             'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false),
-            'throw' => false,
+            'throw' => true,
+        ],
+
+        'digitalocean' => [
+            'driver' => 's3',
+            'key' => env('DIGITALOCEAN_ACCESS_KEY_ID'),
+            'secret' => env('DIGITALOCEAN_SECRET_ACCESS_KEY'),
+            'region' => env('DIGITALOCEAN_DEFAULT_REGION'),
+            'bucket' => env('DIGITALOCEAN_BUCKET'),
+            'url' => env('DIGITALOCEAN_URL'),
+            'endpoint' => env('DIGITALOCEAN_ENDPOINT'),
+            'bucket_endpoint' => true,
+            'visibility' => 'public',
+            'throw' => true,
+        ],
+
+        'linode' => [
+            'driver' => 's3',
+            'key' => env('LINODE_ACCESS_KEY_ID'),
+            'secret' => env('LINODE_SECRET_ACCESS_KEY'),
+            'endpoint' => env('LINODE_ENDPOINT'),
+            'region' => env('LINODE_DEFAULT_REGION'),
+            'bucket' => env('LINODE_BUCKET'),
+            'url' => env('LINODE_URL'),
         ],
 
     ],

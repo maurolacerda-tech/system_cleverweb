@@ -10,6 +10,7 @@
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "laravellegends/pt-br-validator": "^11.0",
+        "league/flysystem-aws-s3-v3": "^3.29",
         "livewire/livewire": "^3.5",
         "maatwebsite/excel": "^3.1",
         "mostafaznv/php-x-sendfile": "^1.1",

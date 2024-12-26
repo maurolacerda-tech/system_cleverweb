@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Helpers\SettingHelpers;
 use App\Mail\SendMailSuporte;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -9,13 +10,24 @@ use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
 use Livewire\WithFileUploads;
 
 class UserService extends Service
 {
     use WithFileUploads;
+
+
+    public $folder;
+    public $storage_name;
+
+    public function __construct()
+    {
+        $setting = SettingHelpers::getList();
+
+        $this->folder = 'users';
+        $this->storage_name = isset($setting['system_upload_type']) && !is_null($setting['system_upload_type']) && !empty($setting['system_upload_type']) ? $setting['system_upload_type'] : 'public';
+    }
 
     public function list(Array $search_array = [])
     {
@@ -107,8 +119,8 @@ class UserService extends Service
             ];
             $image = $data['image'] ?? null;
             if(!is_null($image)){
-                $folder ='users';
-                $storage_name = 'public';
+                $folder = $this->folder;
+                $storage_name = $this->storage_name;
                 $extension  = $image->extension();
                 $arrayExtension = [$extension, 'jpg'];
                 $fileName = str_replace($arrayExtension, '', $image->getClientOriginalName());
@@ -120,7 +132,6 @@ class UserService extends Service
                 ['email' => $data['email']],
                 $data_store
             );
-
 
             $role_id = $data['role_id'] ?? [];
             if($user){
@@ -188,8 +199,8 @@ class UserService extends Service
             }
             $image = $data['image'];
             if(!is_null($image)){
-                $folder ='users';
-                $storage_name = 'public';
+                $folder = $this->folder;
+                $storage_name = $this->storage_name;
                 $extension  = $image->extension();
                 $arrayExtension = [$extension, 'jpg'];
                 $fileName = str_replace($arrayExtension, '', $image->getClientOriginalName());

@@ -28,7 +28,7 @@
              <img src="{{ $image->temporaryUrl() }}" class="h-70px">
         @else
             @if (!is_null($image_show))
-                <img src="{{ url("storage/users/".$image_show) }}" class="h-70px">
+                <img src="{{ path_public_file("storage/users/".$image_show) }}" class="h-70px">
             @endif
         @endif
     </div>

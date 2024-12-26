@@ -16,6 +16,8 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libcurl4-openssl-dev \
+    libssl-dev \
     zip \
     unzip
 
@@ -24,7 +26,7 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg=/usr/include/ --enable-gd
-RUN docker-php-ext-install gd intl pdo_mysql pdo_pgsql mbstring exif pcntl bcmath gd sockets zip xml
+RUN docker-php-ext-install gd intl pdo_mysql pdo_pgsql mbstring exif pcntl gd sockets zip xml curl bcmath
 
 # Get latest Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

@@ -128,7 +128,7 @@
                                                 <a href="{{route('panel.users.edit',['user'=>$user->id])}}" wire:navigate>
                                                     <div class="symbol-label">
                                                         @if (!is_null($user->image))
-                                                            <img src="{{ url("storage/users/".$user->image) }}" alt="{{$user->name}}" class="w-100">
+                                                            <img src="{{ path_public_file("storage/users/".$user->image) }}" alt="{{$user->name}}" class="w-100">
                                                         @else
                                                             <img src="{{Vite::asset('resources/panel/images/user.png')}}" alt="{{$user->name}}" class="w-100">
                                                         @endif
@@ -139,7 +139,7 @@
                                                 <span>
                                                     <div class="symbol-label">
                                                         @if (!is_null($user->image))
-                                                            <img src="{{ url("storage/users/".$user->image) }}" alt="{{$user->name}}" class="w-100">
+                                                            <img src="{{ path_public_file("storage/users/".$user->image) }}" alt="{{$user->name}}" class="w-100">
                                                         @else
                                                             <img src="{{Vite::asset('resources/panel/images/user.png')}}" alt="{{$user->name}}" class="w-100">
                                                         @endif

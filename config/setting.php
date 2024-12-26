@@ -69,7 +69,7 @@ return [
                         's3' => 'AWS S3',
                         'google_drive' => 'Google Drive',
                         'linode' => 'Linode',
-                        'digitalocenan' => 'DigitalOcean'
+                        'digitalocean' => 'DigitalOcean'
                     ]
                 ]
             ]

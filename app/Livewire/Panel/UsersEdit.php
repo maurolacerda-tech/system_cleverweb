@@ -18,7 +18,7 @@ class UsersEdit extends Component
     use WithFileUploads;
 
     public $page_title = 'Usuários';
-    public $page_subtitle = 'Editar';
+    public $page_subtitle = [];
     public $roles;
     public $user;
     public $image_show;
@@ -46,6 +46,27 @@ class UsersEdit extends Component
 
     public function mount(User $user)
     { 
+        $this->page_subtitle = [
+            [
+                'name' => 'Gerenciamento',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Perfis de acesso',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Usuários',
+                'class' => 'text-muted',
+                'url' => route('panel.users')
+            ],
+            [
+                'name' => "Editar - {$user->name}",
+                'class' => 'text-dark',
+                'url' => route('panel.users.edit',['user'=>$user->id])
+            ]
+        ];
+
         $this->roles = Role::orderBy('label','asc')->get();
         $this->user = $user;
 

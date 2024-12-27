@@ -1,13 +1,25 @@
 <div>
 
-    <div class="toolbar" id="kt_toolbar">
-        <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
-            <div data-kt-swapper="true" data-kt-swapper-mode="prepend" data-kt-swapper-parent="{default: '#kt_content_container', 'lg': '#kt_toolbar_container'}" class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
-                <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">{{$page_title ?? ''}}</h1>
-                <span class="h-20px border-gray-200 border-start mx-4"></span>
-                <h2 class="breadcrumb breadcrumb-separatorless fw-bold fs-7 my-1">
-                    {!! $page_subtitle ?? '' !!}
-                </h2>
+    <div class="header" id="kt_header">
+        <div class="container-xxl d-flex align-items-center justify-content-between">
+            <div class="page-title d-flex flex-column align-items-start justify-content-center flex-wrap me-lg-2 pb-2 pb-lg-0">
+                <h1 class="text-dark fw-bolder my-0 fs-2">{{$page_title ?? ''}}</h1>
+                @if(isset($page_subtitle) && is_array($page_subtitle))
+                <ul class="breadcrumb fw-bold fs-base my-1">
+                    @foreach ($page_subtitle as $subtitle_item)
+                        <li class="breadcrumb-item {{$subtitle_item['class']}}">
+                            @if(isset($subtitle_item['url']))
+                                <a href="{{$subtitle_item['url']}}" class="{{$subtitle_item['class']}}" wire:navigate>{{$subtitle_item['name']}}</a>
+                            @else
+                                {{$subtitle_item['name']}}
+                            @endif
+                        </li>
+                    @endforeach
+                </ul>
+                @endif
+            </div>
+            <div class="d-flex d-lg-none align-items-center ms-n2 me-2">
+                <livewire:panel.components.topbtnmobile />
             </div>
         </div>
     </div>

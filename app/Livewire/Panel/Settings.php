@@ -12,12 +12,28 @@ class Settings extends Component
     use LivewireAlert;
     
     public $page_title = 'Configurações';
-    public $page_subtitle = 'Configurações - Geral';
+    public $page_subtitle = [];
     public $config_array;
     public $setting_fields = [];
 
     public function mount()
-    {   
+    {  
+        $this->page_subtitle = [
+            [
+                'name' => 'Gerenciamento',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Configurações',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Configurações',
+                'class' => 'text-dark',
+                'url' => route('panel.settings')
+            ]
+        ];
+
         $config_array = config('setting.setting');
         $this->config_array = $config_array;
 

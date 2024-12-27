@@ -16,6 +16,7 @@ class Roles extends Component
     use LivewireAlert;
 
     public $page_title = 'Grupos de Trabalho';
+    public $page_subtitle = [];
     public $search_label = '';
     public $permissions;
     public $last_id_update;
@@ -31,6 +32,21 @@ class Roles extends Component
 
     public function mount()
     { 
+        $this->page_subtitle = [
+            [
+                'name' => 'Gerenciamento',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Perfis de acesso',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Grupos de Trabalho',
+                'class' => 'text-dark',
+                'url' => route('panel.roles')
+            ]
+        ];
         $this->permissions = Permission::orderBy('group_name','asc')->orderBy('label','asc')->get();
     }
 

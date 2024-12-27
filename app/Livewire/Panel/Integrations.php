@@ -15,7 +15,7 @@ class Integrations extends Component
     use LivewireAlert;
 
     public $page_title = 'Integrações e Plugins';
-    public $page_subtitle = 'Configurações - Integrações e Plugins';
+    public $page_subtitle = [];
     public $all_modules;
     public $setting_fields = [];
     public $btn_get_modules = 'Verificar se há novos módulos';
@@ -27,6 +27,22 @@ class Integrations extends Component
 
     public function mount()
     {
+        $this->page_subtitle = [
+            [
+                'name' => 'Gerenciamento',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Configurações',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Integrações e Plugins',
+                'class' => 'text-dark',
+                'url' => route('panel.settings')
+            ]
+        ];
+
         $modules = new ModulesHelpers;
 
         $get_all_modules = $modules->get_all_modules();

@@ -19,7 +19,8 @@ class Users extends Component
     use WithFileUploads;
 
     public $page_title = 'Usuários';
-    public $search_label = '';
+    public $page_subtitle = [];
+    public $search_name = '';
     public $search_role = '';
     public $last_id_update;
     public $roles;
@@ -49,6 +50,22 @@ class Users extends Component
 
     public function mount()
     {
+        $this->page_subtitle = [
+            [
+                'name' => 'Gerenciamento',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Perfis de acesso',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Usuários',
+                'class' => 'text-dark',
+                'url' => route('panel.users')
+            ]
+        ];
+
         $this->roles = Role::orderBy('label','asc')->get();
     }
 
@@ -63,7 +80,8 @@ class Users extends Component
             abort(403, 'Você não tem permissão para gerenciar esta página');
 
         $search_array = [
-            'search_label' => $this->search_label
+            'search_name' => $this->search_name,
+            'search_role' => $this->search_role
         ];
         $user_service = new UserService;
         $response = $user_service->list($search_array);

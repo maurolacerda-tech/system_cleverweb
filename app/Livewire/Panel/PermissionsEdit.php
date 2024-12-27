@@ -12,7 +12,7 @@ class PermissionsEdit extends Component
 {
 
     public $page_title = 'Permissões';
-    public $page_subtitle = 'Editar';
+    public $page_subtitle = [];
 
     public $query = '';
     public $group_list;
@@ -26,7 +26,26 @@ class PermissionsEdit extends Component
     public function mount(Permission $permission)
     {
         $this->group_list = Permission::GROUP_LIST;
-        $this->page_subtitle = 'Editar &nbsp; <span class="text-warning">'.$permission->label.'</span>';
+        $this->page_subtitle = [
+            [
+                'name' => 'Gerenciamento',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Perfis de acesso',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Permissões',
+                'class' => 'text-muted',
+                'url' => route('panel.permissions')
+            ],
+            [
+                'name' => 'Editar - '.$permission->label,
+                'class' => 'text-dark',
+                'url' => route('panel.permissions.edit',['permission'=>$permission->id])
+            ]
+        ];
 
         $this->permission = $permission;
         $this->name = $permission->name;

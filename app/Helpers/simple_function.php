@@ -257,6 +257,7 @@ function path_public_file($path)
         $setting = SettingHelpers::getList();
         $system_upload_type = $setting['system_upload_type'] ?? 'public';
         $path = substr($path,0,8) == 'storage/' ? substr($path,7) : $path;
+        /** @disregard [url] [method in Storage Facades] */
         return Storage::disk($system_upload_type)->url($path);
     } catch (\Throwable $th) {
         return null;

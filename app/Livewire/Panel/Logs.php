@@ -15,7 +15,29 @@ class Logs extends Component
     use WithPagination;
     use LivewireAlert;
 
+    public $page_title = 'Logs';
+    public $page_subtitle = [];
+
     public $query_users_filters;
+
+    public function mount()
+    {
+        $this->page_subtitle = [
+            [
+                'name' => 'Gerenciamento',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Perfis de acesso',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Logs',
+                'class' => 'text-dark',
+                'url' => route('panel.logs')
+            ]
+        ];
+    }
 
     public function search()
     {

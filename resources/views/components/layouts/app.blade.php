@@ -12,7 +12,7 @@
         @livewireStyles
         @vite(['resources/panel/sass/app.scss'])
     </head>
-    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled toolbar-fixed aside-enabled aside-fixed" style="--kt-toolbar-height:55px;--kt-toolbar-height-tablet-and-mobile:55px">
+    <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed aside-fixed aside-secondary-enabled" >
         
 
 		<livewire:components.loader-manager lazy="on-load" />
@@ -20,20 +20,9 @@
 
         <div class="d-flex flex-column flex-root" >
 			<div class="page d-flex flex-row flex-column-fluid">
-
                 <livewire:panel.components.side />
-
 				<div class="wrapper d-flex flex-column flex-row-fluid" id="kt_wrapper">
-					<div id="kt_header" style="" class="header align-items-stretch">
-						<div class="container-fluid d-flex align-items-stretch justify-content-between">
-							<livewire:panel.components.topbtnmobile />
-							<div class="d-flex align-items-stretch justify-content-between flex-lg-grow-1">
-                                <livewire:panel.components.topmenu />
-
-                                <livewire:panel.components.topbar />
-							</div>							
-						</div>
-					</div>
+				
 					<div class="content d-flex flex-column flex-column-fluid" id="app">
 					
 						{{ $slot }}
@@ -44,7 +33,7 @@
 			</div>
 			
 		</div>
-		<div class="drawer-overlay" id="drawer-overlay" style="display: none; z-index: 99" onclick="window.open_close_menu();"></div>
+		<div class="drawer-overlay" id="drawer-overlay" style="display: none; z-index: 99" onclick="window.open_close_menu_mobile();"></div>
 		<div class="drawer-overlay" id="drawer-overlay-top" style="display: none; z-index: 99" onclick="window.open_close_menutop();"></div>
     </body>
 

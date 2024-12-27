@@ -17,7 +17,7 @@ class RolesEdit extends Component
     use LivewireAlert;
 
     public $page_title = 'Grupos de Trabalho';
-    public $page_subtitle = 'Editar';
+    public $page_subtitle = [];
     public $permissions;
     public $role;
 
@@ -32,6 +32,27 @@ class RolesEdit extends Component
 
     public function mount(Role $role)
     { 
+        $this->page_subtitle = [
+            [
+                'name' => 'Gerenciamento',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Perfis de acesso',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Grupos de Trabalho',
+                'class' => 'text-muted',
+                'url' => route('panel.roles')
+            ],
+            [
+                'name' => 'Editar - '.$role->label,
+                'class' => 'text-dark',
+                'url' => route('panel.roles.edit',['role'=>$role->id])
+            ]
+        ];
+
         $this->permissions = Permission::orderBy('group_name','asc')->orderBy('label','asc')->get();
         $this->role = $role;
 

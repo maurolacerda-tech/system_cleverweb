@@ -14,6 +14,10 @@ class Permissions extends Component
 {
     use WithPagination;
     use LivewireAlert;
+
+    public $page_title = 'Permissões';
+    public $page_subtitle = [];
+
     public $search_label, $search_group, $last_id_update;
 
     #[Validate('required', message: 'O Grupo da permissão é obrigatório')] 
@@ -26,6 +30,25 @@ class Permissions extends Component
     #[Validate('required', message: 'O Título de identificação é obrigatório')] 
     public $label = '';
 
+    public function mount()
+    {
+        $this->page_subtitle = [
+            [
+                'name' => 'Gerenciamento',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Perfis de acesso',
+                'class' => 'text-muted'
+            ],
+            [
+                'name' => 'Permissões',
+                'class' => 'text-dark',
+                'url' => route('panel.permissions')
+            ]
+        ];
+    }
+
     public function search()
     {
         $this->resetPage();
@@ -35,8 +58,6 @@ class Permissions extends Component
     {
         if( Gate::denies("manager_system_permission") ) 
             abort(403, 'Você não tem permissão para gerenciar esta página');
-
-        $page_title = 'Permissões';
 
         $group_list = Permission::GROUP_LIST;
         $search_array = [
@@ -50,7 +71,7 @@ class Permissions extends Component
             $this->alert('error', $response->original['message'],['timer' => '6000']);
         }
         $permissions = $response->original['data'];
-        return view('livewire.panel.permissions',compact('permissions','page_title','group_list'));
+        return view('livewire.panel.permissions',compact('permissions','group_list'));
     }
 
     public function store()

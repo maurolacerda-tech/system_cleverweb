@@ -21,14 +21,7 @@ class RolesEdit extends Component
     public $permissions;
     public $role;
 
-    #[Validate('required', message: 'A Tag da equipe é obrigatória')]
-    public $name;
-
-    #[Validate('required', message: 'O Título de identificação é obrigatório')]
-    public $label;
-
-    #[Validate('required', message: 'Selecione ao menos uma permissão')]
-    public $permission_id = [];
+    public $name, $label, $permission_id = [];
 
     public function mount(Role $role)
     { 
@@ -74,13 +67,24 @@ class RolesEdit extends Component
     {
         if( Gate::denies("manager_system_edit_roles") ) 
             abort(403, 'Você não tem permissão para gerenciar esta página');
-        
-        $validated = $this->validate();
 
         $role_service = new RoleService;
-        $response = $role_service->update($this->role, $validated);
+        $response = $role_service->update(
+            $this->role,
+            [
+                'name' => $this->name,
+                'label' => $this->label,
+                'permission_id' => $this->permission_id
+            ]
+        );
         if(isset($response->original['error']) && $response->original['error']){
-            $this->alert('error', $response->original['message'],['timer' => '6000']);
+            $messages_error = $response->original['message'] ?? [];
+            foreach ($messages_error as $key => $messages_array) {
+                foreach ($messages_array as $message_item) {
+                    $this->addError($key, $message_item);
+                }
+            }
+            $this->alert('error', 'Verifique os erros sinalizados nos campos',['timer' => '6000']);
         }else{
             return $this->redirectRoute('panel.roles', navigate: true);
         }

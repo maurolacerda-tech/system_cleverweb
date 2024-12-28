@@ -73,6 +73,12 @@
             <label for="password" class="fw-bold fs-6 mb-2">Senha</label>
             <div class="position-relative mb-3">
                 <input class="form-control form-control-solid mb-3 mb-lg-0" name="password" type="password" value="" id="password" wire:model="password">
+                @error('password')
+                    <div class="text-danger pt-1 small">
+                        <i class="fa fa fa-times-circle text-danger"></i>
+                        {{ $message }} 
+                    </div>
+                @enderror
             </div>
         </div>
     </div>

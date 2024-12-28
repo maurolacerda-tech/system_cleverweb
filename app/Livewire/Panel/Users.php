@@ -26,26 +26,7 @@ class Users extends Component
     public $roles;
     public $image_show;
 
-    #[Validate('nullable', message: 'Adicione uma imagem')]
-    #[Validate('mimes:jpeg,png,jpg,gif,svg,webp', message: 'Formato de arquivo não permitido')]
-    #[Validate('max:4096', message: 'Tamanho máximo para a imagem é de 4MB')]
-    public $image;
-
-    #[Validate('required', message: 'O nome é obrigatório')]
-    public $name;
-
-    #[Validate('required', message: 'Faltou preencher o e-mail')]
-    #[Validate('email', message: 'Não é um e-mail válido')]
-    public $email;
-
-    #[Validate('required')]
-    public $password;
-
-    #[Validate('nullable', message: 'Status obrigatório')]
-    public $status;
-
-    #[Validate('required', message: 'Selecione ao menos uma equipe')]
-    public $role_id = [];
+    public $image, $name, $email, $password, $status, $role_id = [];
 
 
     public function mount()
@@ -105,11 +86,27 @@ class Users extends Component
         if( Gate::denies("manager_system_add_users") ) 
             abort(403, 'Você não tem permissão para gerenciar esta página');
 
-        $validated = $this->validate();
+        //$this->addError(['name'], ['fake mesage']);
+
         $user_service = new UserService;
-        $response = $user_service->store($validated);
+        $response = $user_service->store(
+            [
+                'image' => $this->image,
+                'name' => $this->name,
+                'email' => $this->email,
+                'password' => $this->password,
+                'status' => $this->status,
+                'role_id' => $this->role_id,
+            ]
+        );
         if(isset($response->original['error']) && $response->original['error']){
-            $this->alert('error', $response->original['message'],['timer' => '6000']);
+            $messages_error = $response->original['message'] ?? [];
+            foreach ($messages_error as $key => $messages_array) {
+                foreach ($messages_array as $message_item) {
+                    $this->addError($key, $message_item);
+                }
+            }
+            $this->alert('error', 'Verifique os erros sinalizados nos campos',['timer' => '6000']);
         }else{
             $this->reset(['image', 'name', 'email', 'password', 'status','role_id']);
             $this->js("document.getElementById('btn_close_modal_add').click();");

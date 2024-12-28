@@ -11,6 +11,8 @@ use App\Services\PermissionService;
 class PermissionsEdit extends Component
 {
 
+    use LivewireAlert;
+
     public $page_title = 'Permissões';
     public $page_subtitle = [];
 
@@ -60,27 +62,22 @@ class PermissionsEdit extends Component
 
     public function store()
     {
-        $validated = $this->validate(
-            [ 
-                'name' => [
-                    'required',
-                    Rule::unique('permissions')->ignore($this->permission), 
-                ],
-                'label' => 'required',
-                'group_name' => 'required',
-            ],
-            [
-                'name.required' => 'O código da permissão é obrigatório',
-                'name.unique' => 'Já existe um registro com este código',
-                'label.required' => 'O código da permissão é obrigatório',
-                'group_name.required' => 'O código da permissão é obrigatório',
-            ]
-        );
+        $data = [
+            'name' => $this->name,
+            'label' => $this->label,
+            'group_name' => $this->group_name
+        ];
 
         $permission_service = new PermissionService;
-        $response = $permission_service->update($this->permission, $validated);
+        $response = $permission_service->update($this->permission, $data);
         if(isset($response->original['error']) && $response->original['error']){
-            $this->alert('error', $response->original['message'],['timer' => '6000']);
+            $messages_error = $response->original['message'] ?? [];
+            foreach ($messages_error as $key => $messages_array) {
+                foreach ($messages_array as $message_item) {
+                    $this->addError($key, $message_item);
+                }
+            }
+            $this->alert('error', 'Verifique os erros sinalizados nos campos',['timer' => '6000']);
         }else{
             return $this->redirectRoute('panel.permissions', navigate: true);
         }

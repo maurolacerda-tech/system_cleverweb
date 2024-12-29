@@ -1,7 +1,7 @@
 <div class="h-100">
     <div class="d-flex flex-column flex-lg-row flex-column-fluid h-100">
         <div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative d-none d-xl-flex" >
-            <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px bgi-no-repeat bgi-position-y-bottom" style="background-image: url({{ Vite::asset('resources/panel/images/login-bg.webp') }});background-size: auto 100%; background-color:#312958">
+            <div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px bgi-no-repeat bgi-position-y-bottom" style="background-image: url({{ Vite::asset('resources/panel/images/login-bg.webp') }});background-size: auto 100%; background-color:#04c8c8">
                 <div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20 d-none">
                     <h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #EC684E;">
                         Painel Gerenciador
@@ -20,8 +20,8 @@
                         @csrf
                         <div class="text-center mb-10">
                             <a href="" class="py-9 mb-5">
-                                <img alt="{{config('app.name')}}" src="{{ Vite::asset('resources/panel/images/logo.png') }}" class="h-70px" />
-                                <img alt="{{config('app.name')}}" src="{{ Vite::asset('resources/panel/images/logo.png') }}" class="h-50px d-none" />
+                                <img alt="{{config('app.name')}}" src="{{ Vite::asset('resources/panel/images/logo.jpg') }}" class="h-70px" />
+                                <img alt="{{config('app.name')}}" src="{{ Vite::asset('resources/panel/images/logo.jpg') }}" class="h-50px d-none" />
                             </a>
                         </div>
                         <div class="fv-row mb-10">

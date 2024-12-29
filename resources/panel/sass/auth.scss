@@ -5,7 +5,15 @@ body {
     background-color: #FFFFFF !important;
 }
 
-.btn.btn-primary{
-    border-color: #312958;
-    background-color: #312958;
+.btn{
+    &.btn-primary{
+        border-color: #04c8c8;
+        background-color: #04c8c8;
+        &:hover:not(.btn-active){
+            border-color: #00afaf;
+            background-color: #00afaf !important;
+        }
+    }
 }
+
+

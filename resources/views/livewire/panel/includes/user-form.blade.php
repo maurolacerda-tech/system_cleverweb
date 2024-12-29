@@ -37,7 +37,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="fv-row mb-7">
-            <label for="name" class="fw-bold fs-6 mb-2">Nome</label>
+            <label for="name" class="fw-bold fs-6 mb-2 required">Nome</label>
             <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="191" wire:model="name">
             @error('name')
                 <div class="text-danger pt-1 small">
@@ -52,7 +52,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="fv-row mb-7">
-            <label for="email" class="fw-bold fs-6 mb-2">E-mail</label>
+            <label for="email" class="fw-bold fs-6 mb-2 required">E-mail</label>
             <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" maxlength="191" wire:model="email">
             @error('email')
                 <div class="text-danger pt-1 small">
@@ -70,7 +70,7 @@
 <div class="row">
     <div class="col-sm-8">
         <div class="fv-row mb-7" data-kt-password-meter="true">
-            <label for="password" class="fw-bold fs-6 mb-2">Senha</label>
+            <label for="password" class="fw-bold fs-6 mb-2 @if(!isset($user)) required @endif">Senha</label>
             <div class="position-relative mb-3">
                 <input class="form-control form-control-solid mb-3 mb-lg-0" name="password" type="password" value="" id="password" wire:model="password">
                 @error('password')
@@ -104,7 +104,7 @@
     (auth()->user()->can('manager_system_edit_users') && isset($user)) ||
     (auth()->user()->can('manager_system_add_users') && !isset($user))
 )
-    <label class="fw-bold fs-6 mb-5 d-block">
+    <label class="fw-bold fs-6 mb-5 d-block required">
         Equipes
         <a href="javascript:void(0);" class="float-end small" id="mark_all" wire:click="select_all"> marcar todos</a>
     </label>

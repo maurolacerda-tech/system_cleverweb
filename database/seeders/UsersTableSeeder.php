@@ -20,7 +20,7 @@ class UsersTableSeeder extends Seeder
                 'name' => 'Mauro Lacerda',
                 'email' => 'suporte@cleverweb.com.br',
                 'image' => null,
-                'password' => bcrypt('devSystemClever@77'),
+                'password' => bcrypt('suasenhaaqui'),
                 'status' => 1
             ]
         ];
